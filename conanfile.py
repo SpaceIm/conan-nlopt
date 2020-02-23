@@ -64,6 +64,7 @@ class NloptConan(ConanFile):
         self._cmake.definitions["NLOPT_GUILE"] = False
         self._cmake.definitions["NLOPT_SWIG"] = False
         self._cmake.definitions["NLOPT_TESTS"] = False
+        self._cmake.definitions["WITH_THREADLOCAL"] = True
         self._cmake.configure(build_folder=self._build_subfolder)
         return self._cmake
 
