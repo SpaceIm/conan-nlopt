@@ -1,3 +1,4 @@
+import glob
 import os
 
 from conans import ConanFile, CMake, tools
@@ -92,6 +93,8 @@ class NloptConan(ConanFile):
         tools.rmdir(os.path.join(self.package_folder, "lib", "cmake"))
         tools.rmdir(os.path.join(self.package_folder, "lib", "pkgconfig"))
         tools.rmdir(os.path.join(self.package_folder, "share"))
+        for pdb_file in glob.glob(os.path.join(self.package_folder, "bin", "*.pdb")):
+            os.remove(pdb_file)
 
     def package_info(self):
         self.cpp_info.names["cmake_find_package"] = "NLopt"
