@@ -105,8 +105,10 @@ class NloptConan(ConanFile):
             os.remove(pdb_file)
 
     def package_info(self):
+        # TODO: CMake exported target is NLopt::nlopt
         self.cpp_info.names["cmake_find_package"] = "NLopt"
         self.cpp_info.names["cmake_find_package_multi"] = "NLopt"
+        self.cpp_info.names["pkg_config"] = "NLopt"
         self.cpp_info.libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
             self.cpp_info.system_libs.append("m")
