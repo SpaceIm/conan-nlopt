@@ -89,8 +89,6 @@ class NloptConan(ConanFile):
             {"subdir": "newuoa", "license_name": "COPYRIGHT"},
             {"subdir": "slsqp" , "license_name": "COPYRIGHT"},
             {"subdir": "stogo" , "license_name": "COPYRIGHT"},
-            {"subdir": "newuoa", "license_name": "COPYRIGHT"},
-            {"subdir": "newuoa", "license_name": "COPYRIGHT"},
         ]
         for alg_license in algs_licenses:
             self.copy(alg_license["license_name"],
