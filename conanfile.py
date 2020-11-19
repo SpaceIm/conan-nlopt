@@ -105,24 +105,16 @@ class NloptConan(ConanFile):
             os.remove(pdb_file)
 
     def package_info(self):
-        # TODO: CMake exported target is NLopt::nlopt
         self.cpp_info.names["cmake_find_package"] = "NLopt"
         self.cpp_info.names["cmake_find_package_multi"] = "NLopt"
         self.cpp_info.names["pkg_config"] = "nlopt"
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.components["nloptlib"].names["cmake_find_package"] = "nlopt"
+        self.cpp_info.components["nloptlib"].names["cmake_find_package_multi"] = "nlopt"
+        self.cpp_info.components["nloptlib"].names["pkg_config"] = "nlopt"
+        self.cpp_info.components["nloptlib"].libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
-            self.cpp_info.system_libs.append("m")
-        if self.options.enable_cxx_routines and not self.options.shared and self._stdcpp_library:
-            self.cpp_info.system_libs.append(self._stdcpp_library)
+            self.cpp_info.components["nloptlib"].system_libs.append("m")
+        if not self.options.shared and self.options.enable_cxx_routines and tools.stdcpp_library(self):
+            self.cpp_info.components["nloptlib"].system_libs.append(tools.stdcpp_library(self))
         if self.settings.os == "Windows" and self.options.shared:
-            self.cpp_info.defines.append("NLOPT_DLL")
-
-    @property
-    def _stdcpp_library(self):
-        libcxx = self.settings.get_safe("compiler.libcxx")
-        if libcxx in ("libstdc++", "libstdc++11"):
-            return "stdc++"
-        elif libcxx in ("libc++",):
-            return "c++"
-        else:
-            return False
+            self.cpp_info.components["nloptlib"].defines.append("NLOPT_DLL")
